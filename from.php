@@ -1,4 +1,6 @@
-
+<?php
+include("connect.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +19,10 @@
         Refistration Form
         </div>
         <div class="form">
+        <div class="input_field">
+                <label>Photo</label>
+                <input type="file" name="avater">
+            </div>
             <div class="input_field">
                 <label>Firat Name</label>
                 <input type="text" class="input" name="fname" required>
@@ -35,7 +41,7 @@
             </div>
             <div class="input_field">
                 <label>Password</label>
-                <input type="password" class="input" name="password" required>
+                <input type="password" class="input" name="pwd" required>
             </div>
             <div class="input_field">
                 <label>Gender</label>
@@ -48,12 +54,12 @@
             </div>
             <div class="input_field">
                 <label>Address</label>
-                <textarea class="textarea" name="address" required></textarea>
+                <textarea class="textarea" name="addr" required></textarea>
             </div>
 
             <div class="input_field terms">
-                <label class="check" required>
-                    <input type="checkbox">
+                <label class="check">
+                    <input type="checkbox" required>
                     <span class="checkmark"></span>
                 </label>
                 <p>Agree to Terms and Conditions.</p>    
@@ -70,43 +76,36 @@
 
 <?php
 error_reporting(0);
-    $servername = "localhost";
-    $username ="root";
-    $password = "";
-    $database ="project";
-
-    $con = mysqli_connect($servername,$username,$password,$database);
     if($_POST["register"])
     {
+        $avater   =$_POST['avater'];
         $f_name   =$_POST['fname'];
         $l_name   =$_POST['lname'];
         $phone    =$_POST['phone'];
         $email    =$_POST['email'];
-        $password =$_POST['password'];
+        $password =$_POST['pwd'];
         $gender   =$_POST['gender'];
-        $address  =$_POST['address'];
+        $address  =$_POST['addr'];
 
-       $query = "INSERT INTO project VALUES('$f_name','$l_name','$phone','$email','$password','$gender','$address')";
+        if($avater != "" && $f_name != "" && $l_name != "" && $phone != "" && $email != "" && $password != "" && $gender != "" && $address != "")
+        {
+
+       $query = "INSERT INTO project VALUES('$avater','$f_name','$l_name','$phone','$email','$password','$gender','$address')";
 
        $data = mysqli_query($con,$query);
      
        if($data)
        {
-        echo "<script>alert('Success!');</script>";
-
+        echo "Data Added Successfully!";
        }
        else 
        {
          echo "No".mysqli_connect_error();
-
-     }
-    if($con)
-    {
-        //   echo "Connected";
+       }
     }
     else
     {
-        echo "Not Connected";
+        echo "Please Fill the Form"; 
+    }   
     }
-}
 ?>
